@@ -6,6 +6,7 @@ import com.programmer.JwtBackend.repository.RoleRepo;
 import com.programmer.JwtBackend.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
@@ -17,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
     private final RoleRepo roleRepo;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public AppUser findByEmail(String email) {
@@ -30,6 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUser saveUser(AppUser newUser) {
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         return userRepo.save(newUser);
     }
 
