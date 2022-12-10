@@ -2,7 +2,6 @@ package com.programmer.JwtBackend.config;
 
 import com.programmer.JwtBackend.domain.AppUser;
 import com.programmer.JwtBackend.domain.Role;
-import com.programmer.JwtBackend.repository.UserRepo;
 import com.programmer.JwtBackend.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
