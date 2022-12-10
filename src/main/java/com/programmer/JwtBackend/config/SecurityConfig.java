@@ -39,7 +39,7 @@ public class SecurityConfig {
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
                 return new MyUserDetails(
                         userRepo.findByEmail(username)
-                                .orElseThrow(() -> new UsernameNotFoundException("No user was found")));
+                                .orElseThrow(() -> new UsernameNotFoundException("User not found")));
             }
         };
     }
