@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @Log4j2
 public class AuthenticationController {
@@ -25,7 +25,7 @@ public class AuthenticationController {
     private final UserDetailsService userDetailsService;
     private final JwtUtils jwtUtils;
 
-    @PostMapping("/login")
+    @PostMapping("/authentication")
     public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest authRequest) {
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
