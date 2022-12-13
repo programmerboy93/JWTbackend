@@ -3,7 +3,6 @@ package com.programmer.JwtBackend.controller;
 import com.programmer.JwtBackend.controller.dto.request.JwtAuthenticationRequest;
 import com.programmer.JwtBackend.controller.dto.request.UserRequest;
 import com.programmer.JwtBackend.controller.dto.response.JwtResponse;
-import com.programmer.JwtBackend.controller.dto.response.MessageResponse;
 import com.programmer.JwtBackend.domain.AppUser;
 import com.programmer.JwtBackend.service.AuthService;
 import com.programmer.JwtBackend.service.UserService;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/auth")
