@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,29 +25,19 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfig {
 
     private final UserRepo userRepo;
+    private final AuthEntryPoint authEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(STATELESS);
-        http
-                .authorizeHttpRequests().requestMatchers("/api/v1/authentication/**").permitAll()
+        http.csrf().disable().cors().disable();
+        http.sessionManagement().sessionCreationPolicy(STATELESS).and()
+                .exceptionHandling()
+                .authenticationEntryPoint(authEntryPoint)
                 .and()
-                .authorizeHttpRequests().anyRequest().authenticated();
+                .authorizeHttpRequests().requestMatchers("/api/v1/auth/**").permitAll()
+                .anyRequest().authenticated();
 
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return new MyUserDetails(
-                        userRepo.findByEmail(username)
-                                .orElseThrow(() -> new UsernameNotFoundException("User not found")));
-            }
-        };
     }
 
     @Bean
@@ -54,7 +46,13 @@ public class SecurityConfig {
     }
 
     @Bean
+    public UserDetailsService userDetailsService(){
+        return username ->  new MyUserDetails(userRepo.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("not found user "+ username)));
+    }
+
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
 }
