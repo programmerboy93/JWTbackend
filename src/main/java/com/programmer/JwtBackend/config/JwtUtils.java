@@ -20,7 +20,7 @@ public class JwtUtils implements Serializable {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-    @Value("${jwt.ExpirationMs}")
+    @Value("${jwt.ExpirationH}")
     private long jwtExpirationMs;
 
     public String generateJwtToken(UserDetails userDetails) {
