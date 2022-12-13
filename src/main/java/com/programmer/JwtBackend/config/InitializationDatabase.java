@@ -10,7 +10,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 @Component
 @RequiredArgsConstructor
@@ -29,14 +29,14 @@ public class InitializationDatabase {
         userService.saveRole(user);
 
 
-        AppUser ania = new AppUser(null, "Ania", "ania@ania.com", passwordEncoder.encode("password"), new ArrayList<>());
+        AppUser ania = new AppUser(null, "Ania", "ania", passwordEncoder.encode("password"), new HashSet<>());
         ania.getRoles().add(admin);
 
-        AppUser mike = new AppUser(null, "Mike", "mike@mike.com", passwordEncoder.encode("password"), new ArrayList<>());
+        AppUser mike = new AppUser(null, "Mike", "mike@mike.com", passwordEncoder.encode("password"), new HashSet<>());
         mike.getRoles().add(admin);
         mike.getRoles().add(user);
 
-        AppUser will = new AppUser(null, "Will", "will@will.com", passwordEncoder.encode("password"), new ArrayList<>());
+        AppUser will = new AppUser(null, "Will", "will@will.com", passwordEncoder.encode("password"), new HashSet<>());
         will.getRoles().add(user);
 
         userService.saveUser(ania);

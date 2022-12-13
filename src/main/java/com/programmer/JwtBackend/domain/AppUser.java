@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -29,5 +31,5 @@ public class AppUser {
     private String password;
 
     @ManyToMany(fetch = EAGER)
-    private List<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 }
