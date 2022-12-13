@@ -1,5 +1,6 @@
 package com.programmer.JwtBackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -28,6 +30,7 @@ public class AppUser {
 
     private String email;
 
+    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = EAGER)
