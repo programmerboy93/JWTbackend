@@ -15,4 +15,6 @@ public interface UserService {
     void addRoleToUser(String username, String roleName);
 
     Role saveRole(Role newRole);
+
+    boolean existsByUsername(String username);
 }
