@@ -1,6 +1,7 @@
 package com.programmer.JwtBackend.config;
 
 import com.programmer.JwtBackend.domain.AppUser;
+import com.programmer.JwtBackend.domain.ERole;
 import com.programmer.JwtBackend.domain.Role;
 import com.programmer.JwtBackend.service.UserService;
 import jakarta.transaction.Transactional;
@@ -22,8 +23,8 @@ public class InitializationDatabase {
 
     @EventListener(ApplicationReadyEvent.class)
     public String initDatabase() {
-        Role admin = new Role(null, "ROLE_ADMIN");
-        Role user = new Role(null, "ROLE_USER");
+        Role admin = new Role(null, ERole.ROLE_ADMIN);
+        Role user = new Role(null, ERole.ROLE_USER);
 
         userService.saveRole(admin);
         userService.saveRole(user);
