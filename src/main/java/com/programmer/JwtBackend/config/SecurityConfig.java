@@ -4,6 +4,8 @@ import com.programmer.JwtBackend.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -48,6 +50,11 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(){
         return username ->  new MyUserDetails(userRepo.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("not found user "+ username)));
+    }
+
+    @Bean
+    public JavaMailSender javaMailSender(){
+        return new JavaMailSenderImpl();
     }
 
     @Bean
