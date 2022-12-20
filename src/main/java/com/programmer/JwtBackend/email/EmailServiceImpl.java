@@ -1,46 +1,30 @@
 package com.programmer.JwtBackend.email;
 
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender emailSender;
 
+    @Value("${spring.mail.username}")
+    private String author;
+
     @Override
-    public void sendSimpleMessage(String to, String subject, String text) throws MessagingException {
-        MimeMessage message = emailSender.createMimeMessage();
+    public void sendEmailSimpleMessage(String recipient, String subject, String content) throws MessagingException {
+        SimpleMailMessage message = new SimpleMailMessage();
 
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom("noreply@baeldung.com");
-        helper.setTo(to);
-        helper.setSubject(subject);
-        helper.setText(prepareEmailRegister(), true);
+        message.setFrom(author);
+        message.setTo(recipient);
+        message.setSubject(subject);
+        message.setText(content);
 
         emailSender.send(message);
-    }
-
-    private String prepareEmailRegister() {
-
-        return """
-                Hello [name],
-                Thank you for joining [customer portal].
-                                
-                We’d like to confirm that your account was created successfully. To access [customer portal] click the link below.
-                                
-                [Link/Button]
-                                
-                If you experience any issues logging into your account, reach out to us at [email address].
-                                
-                Best,
-                The [customer portal] team
-                """;
     }
 }

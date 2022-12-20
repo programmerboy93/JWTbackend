@@ -7,7 +7,6 @@ import com.programmer.JwtBackend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -17,7 +16,6 @@ import java.util.HashSet;
 public class InitializationDatabase {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
     @EventListener(ApplicationReadyEvent.class)
     public String initDatabase() {

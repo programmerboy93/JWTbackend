@@ -1,10 +1,11 @@
 package com.programmer.JwtBackend.user;
 
+import com.programmer.JwtBackend.auth.CustomUserDetailsService;
 import com.programmer.JwtBackend.jwt.JwtUtils;
 import com.programmer.JwtBackend.jwt.TokenDto;
 import com.programmer.JwtBackend.user.dto.LoginDto;
-import com.programmer.JwtBackend.user.dto.validator.EmailValidator;
 import com.programmer.JwtBackend.user.dto.RegisterDto;
+import com.programmer.JwtBackend.user.dto.validator.EmailValidator;
 import com.programmer.JwtBackend.user.entity.AppUser;
 import com.programmer.JwtBackend.user.entity.ERole;
 import com.programmer.JwtBackend.user.entity.Role;
@@ -37,9 +38,14 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final CustomUserDetailsService userDetailsService;
+
     public TokenDto generateJwtToken(LoginDto dto) {
 
+        log.info(String.format("username %s is trying authenticate", dto.username()));
+
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.username(), dto.password()));
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return new TokenDto(jwtUtils.generateJwtToken(authentication));
